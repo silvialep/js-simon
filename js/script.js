@@ -40,7 +40,12 @@ viewNumbers(numbers);
 
 let timeStart = 10;
 
+
+// creo la timing function per il countdown
+let counterVariable = setInterval(countDown, 1000);
+
 let correctNumbers = [];
+
 
 // creo evento al click del bottone
 userButton.addEventListener('click', function() {
@@ -48,6 +53,7 @@ userButton.addEventListener('click', function() {
     controlNumbers(numbers, inputForms, correctNumbers);
     console.log(correctNumbers);
 
+    // visualizzo in pagina i div con i risultati
     resultsEl.style.display = 'flex';
     recalledNumbers(correctNumbers, resultsEl);
     userScore.style.display = 'block';
@@ -85,12 +91,8 @@ function viewNumbers(array) {
         newDiv.classList.add('view-numbers');
         newDiv.innerText = array[i];
         containerEl.append(newDiv);
-    }
-}
-
-// creo la timing function per il countdown
-let counterVariable = setInterval(countDown, 1000);
-
+    }    
+}    
 
 // creo funzione per countdown
 function countDown() {
