@@ -30,10 +30,27 @@ function generateNumbers(min, max) {
     return digit;
 }
 
-// creo funzione per generare 5 numeri casuali
-function generateFive() {
-    for(i = 0; i < 5; i ++) {
-        console.log(generateNumbers(1, 10));
+// creo funzione per generare 5 numeri casuali e aggiungerli all'array
+function generateFive(array) {
+    let i = 1;
+    while (array.length < 5) {
+        i = generateNumbers(1, 100);
+        array.push(i);
+    }
+    return array;
+}
+
+
+console.log(generateFive(numbers));
+
+
+// creo funzione per visualizzare in pagina i 5 numeri aggiunti nell'array
+function viewNumbers(array) {
+    for(i = 0; i < array.length; i++) {
+        let newDiv = document.createElement('div');
+        newDiv.innerText = array[i];
+        containerEl.append(newDiv);
     }
 }
 
+viewNumbers(numbers);
