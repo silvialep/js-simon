@@ -22,14 +22,43 @@ const containerEl = document.getElementById('container');
 const counterEl = document.getElementById('count-down');
 const userInput = document.getElementById('user-input');
 const userButton = document.getElementById('user-button');
+const resultsEl = document.getElementById('results');
+const userScore = document.getElementById('user-score');
 
 
 
 userInput.style.display = 'none';
+resultsEl.style.display = 'none';
+userScore.style.display = 'none';
 
 // creo array per i numeri
 const numbers = [];
 
+console.log(generateFive(numbers));
+
+viewNumbers(numbers);
+
+let timeStart = 2;
+
+let correctNumbers = [];
+
+// creo evento al click del bottone
+userButton.addEventListener('click', function() {
+    let inputForms = document.querySelectorAll('.input-form');
+    controlNumbers(numbers, inputForms, correctNumbers);
+    console.log(correctNumbers);
+
+    resultsEl.style.display = 'flex';
+    recalledNumbers(correctNumbers, resultsEl);
+    userScore.style.display = 'block';
+    viewScore(correctNumbers);
+});
+
+
+
+
+
+// FUNZIONI___________
 
 // creo funzione per generare numeri casuali
 function generateNumbers(min, max) {
@@ -42,29 +71,22 @@ function generateFive(array) {
     let i = 1;
     while (array.length < 5) {
         i = generateNumbers(1, 100);
-        array.push(i);
+        if (!array.includes(i)) {
+            array.push(i);
+        }
     }
     return array;
 }
 
-
-console.log(generateFive(numbers));
-
-
 // creo funzione per visualizzare in pagina i 5 numeri aggiunti nell'array
 function viewNumbers(array) {
-    for(i = 0; i < array.length; i++) {
+    for (i = 0; i < array.length; i++) {
         let newDiv = document.createElement('div');
         newDiv.classList.add('view-numbers');
         newDiv.innerText = array[i];
         containerEl.append(newDiv);
     }
 }
-
-viewNumbers(numbers);
-
-let timeStart = 2;
-
 
 // creo la timing function per il countdown
 let counterVariable = setInterval(countDown, 1000);
@@ -73,7 +95,7 @@ let counterVariable = setInterval(countDown, 1000);
 // creo funzione per countdown
 function countDown() {
     counterEl.innerText = `Countdown: ${timeStart}`;
-    if(timeStart <= 0) {
+    if (timeStart <= 0) {
         headerEl.style.display = 'none';
         counterEl.style.display = 'none';
         userInput.style.display = 'block';
@@ -83,18 +105,31 @@ function countDown() {
     timeStart--;
 }
 
-
-
-// creo evento al click del bottone che controlla se i numeri digitati dall'utente 
+// creo funzione per controllare se i numeri digitati dall'utente
 // erano presenti nell'array iniziale di numeri casuali
-userButton.addEventListener('click', function() {
-    let inputForms = document.querySelectorAll('.input-form');
-    for (i = 0; i < inputForms.length; i++) {
-        console.log(inputForms[i].value);
-        if (numbers.includes(Number(inputForms[i].value))) {
-            console.log(`Il numero ${inputForms[i].value} era incluso nell'elenco`);
+function controlNumbers(array1, array2, array3) {
+    for (i = 0; i < array2.length; i++) {
+        let okNum = array2[i].value;
+        if (array1.includes(Number(okNum))) {
+            array3.push(array2[i].value);
         }
-
-        inputForms[i].value = '';
+        array2[i].value = '';
     }
-});
+    return array3;
+}
+
+
+// creo funzione per visualizzare i numeri che l'utente ha ricordato
+function recalledNumbers(array, container) {
+    for (i = 0; i < array.length; i++) {
+        let divNumber = document.createElement('div');
+        divNumber.innerText = array[i];
+        container.append(divNumber);
+    }
+}
+
+
+// creo funzione per visualizzare il punteggio finale
+function viewScore(array) {
+    userScore.innerText = `Il tuo punteggio è: ${array.length}`;
+}

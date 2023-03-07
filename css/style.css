@@ -27,3 +27,8 @@
     display: flex;
     gap: 20px;
 }
+
+#results, #user-score {
+    gap: 20px;
+    padding: 30px;
+}
