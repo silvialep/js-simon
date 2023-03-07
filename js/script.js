@@ -21,6 +21,7 @@ const headerEl = document.getElementById('header');
 const containerEl = document.getElementById('container');
 const counterEl = document.getElementById('count-down');
 const userInput = document.getElementById('user-input');
+const userButton = document.getElementById('user-button');
 
 
 
@@ -62,7 +63,7 @@ function viewNumbers(array) {
 
 viewNumbers(numbers);
 
-let timeStart = 10;
+let timeStart = 2;
 
 
 // creo la timing function per il countdown
@@ -75,10 +76,25 @@ function countDown() {
     if(timeStart <= 0) {
         headerEl.style.display = 'none';
         counterEl.style.display = 'none';
-        userInput.style.display = 'flex';
+        userInput.style.display = 'block';
         clearInterval(counterVariable);
+        document.querySelectorAll('.input-form').value = '';
     }
     timeStart--;
 }
 
 
+
+// creo evento al click del bottone che controlla se i numeri digitati dall'utente 
+// erano presenti nell'array iniziale di numeri casuali
+userButton.addEventListener('click', function() {
+    let inputForms = document.querySelectorAll('.input-form');
+    for (i = 0; i < inputForms.length; i++) {
+        console.log(inputForms[i].value);
+        if (numbers.includes(Number(inputForms[i].value))) {
+            console.log(`Il numero ${inputForms[i].value} era incluso nell'elenco`);
+        }
+
+        inputForms[i].value = '';
+    }
+});
