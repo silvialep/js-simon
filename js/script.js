@@ -38,7 +38,7 @@ console.log(generateFive(numbers));
 
 viewNumbers(numbers);
 
-let timeStart = 2;
+let timeStart = 10;
 
 let correctNumbers = [];
 
