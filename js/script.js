@@ -17,8 +17,14 @@ Consigli del giorno:
 
 
 // creo le variabili degli elementi HTML che mi serve manipolare
+const headerEl = document.getElementById('header');
 const containerEl = document.getElementById('container');
+const counterEl = document.getElementById('count-down');
+const userInput = document.getElementById('user-input');
 
+
+
+userInput.style.display = 'none';
 
 // creo array per i numeri
 const numbers = [];
@@ -48,9 +54,31 @@ console.log(generateFive(numbers));
 function viewNumbers(array) {
     for(i = 0; i < array.length; i++) {
         let newDiv = document.createElement('div');
+        newDiv.classList.add('view-numbers');
         newDiv.innerText = array[i];
         containerEl.append(newDiv);
     }
 }
 
 viewNumbers(numbers);
+
+let timeStart = 10;
+
+
+// creo la timing function per il countdown
+let counterVariable = setInterval(countDown, 1000);
+
+
+// creo funzione per countdown
+function countDown() {
+    counterEl.innerText = `Countdown: ${timeStart}`;
+    if(timeStart <= 0) {
+        headerEl.style.display = 'none';
+        counterEl.style.display = 'none';
+        userInput.style.display = 'flex';
+        clearInterval(counterVariable);
+    }
+    timeStart--;
+}
+
+
