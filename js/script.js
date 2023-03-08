@@ -113,7 +113,9 @@ function controlNumbers(array1, array2, array3) {
     for (i = 0; i < array2.length; i++) {
         let okNum = array2[i].value;
         if (array1.includes(Number(okNum))) {
-            array3.push(array2[i].value);
+            if (!array3.includes(array2[i].value)) {
+                array3.push(array2[i].value);
+            }
         }
         array2[i].value = '';
     }
